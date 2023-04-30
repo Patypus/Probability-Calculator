@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using ProbabilityCalculator.Attributes;
 using ProbabilityCalculator.Enums;
+using System.Net;
 using System.Reflection;
 
 namespace ProbabilityCalculator.Controllers
@@ -30,16 +31,34 @@ namespace ProbabilityCalculator.Controllers
 
         [HttpGet]
         [Route("execute")]
-        public async Task<IActionResult> ExecuteAsync(ProbabilityCalculationTypes calculationType, double operandA, double operandB)
+        public async Task<IActionResult> ExecuteAsync(ProbabilityCalculationTypes type, double operandA, double operandB)
         {
-            var calcType = Assembly.GetExecutingAssembly().GetTypes()
-                .Where(type => type.GetCustomAttribute<CalculationTypeAttribute>()?.ProbabilityCalculationType == calculationType);
+            if (!IsOperandValid(operandA) || !IsOperandValid(operandB))
+            {
+                return BadRequest(new { message = "Both operands must be >= 0 and <= 1" });
+            }
 
-            var calculation = Activator.CreateInstance(calcType.First(), operandA, operandB);
+            var calculationType = GetAvailableCalculationTypes(type);
+            if (!calculationType.Any())
+            {
+                return new StatusCodeResult((int)HttpStatusCode.NotImplemented);
+            }
 
-            var result = await _mediator.Send(calculation);
+            var calculationRequest = Activator.CreateInstance(Enumerable.First(calculationType), operandA, operandB);
+            if (calculationRequest == null)
+            {
+                return new StatusCodeResult((int)HttpStatusCode.InternalServerError);
+            }
 
+            var result = await _mediator.Send(calculationRequest);
             return new JsonResult(result);
         }
+
+        private bool IsOperandValid(double operand) => operand >= 0 && operand <= 1.0;
+
+        private IEnumerable<Type> GetAvailableCalculationTypes(ProbabilityCalculationTypes type) => 
+            Assembly.GetExecutingAssembly()
+                .GetTypes()
+                .Where(assemblyType => assemblyType.GetCustomAttribute<CalculationTypeAttribute>()?.ProbabilityCalculationType == type);
     }
 }

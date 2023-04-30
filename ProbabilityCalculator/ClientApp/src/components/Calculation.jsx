@@ -10,7 +10,7 @@ export function Calculation () {
     }
 
     const loadCalculation = async () => {
-        var response = await fetch('probabilitycalculation/execute?calculationType=CombinedWith&operandA=0.2&operandB=0.4');
+        var response = await fetch('probabilitycalculation/execute?type=CombinedWith&operandA=0.2&operandB=0.4');
         const data = await response.json();
         setResult(data.probability);
     }
