@@ -24,10 +24,10 @@ export function CalculationTypeSelector({selectedType, setSelectedType}) {
 
     return (
         <div className="mb-1">
-            <label className="form-label">Calculation Type</label>
+            <label htmlFor="calculation-type-selector" className="form-label">Calculation Type</label>
             {loadingTypes
                 ? <Loading />
-                : <select className="form-select" value={selectedType} onChange={onTypeSelect}>
+                : <select id="calculation-type-selector" className="form-select" value={selectedType} onChange={onTypeSelect}>
                     {types.map((type, index) => (<option key={`${index}-${type}`}>{type}</option>))}
                 </select>}
         </div>

@@ -27,12 +27,12 @@ export function Calculation() {
         <form onSubmit={loadCalculation}>
             <CalculationTypeSelector selectedType={selectedType} setSelectedType={setSelectedType} />
             <OperandInput
-                name="Operand A"
+                label="Operand A"
                 value={operandA}
                 setValue={setOperandA}
             />
             <OperandInput
-                name="Operand B"
+                label="Operand B"
                 value={operandB}
                 setValue={setOperandB}
             />
