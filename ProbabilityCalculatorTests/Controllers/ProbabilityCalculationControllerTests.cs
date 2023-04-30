@@ -69,7 +69,7 @@ namespace ProbabilityCalculatorTests.Controllers
         {
             // Arrange
             _mediator
-                .Setup(mock => mock.Send(It.IsAny<CombinedWithProbabilityRequest>(), It.IsAny<CancellationToken>()))
+                .Setup(mock => mock.Send(It.IsAny<object>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(new ProbabilityCalculationResult());
 
             var operandA = 0.3;
@@ -80,9 +80,9 @@ namespace ProbabilityCalculatorTests.Controllers
             var result = await controller.ExecuteAsync(ProbabilityCalculationTypes.CombinedWith, operandA, operandB);
 
             // Assert
-            _mediator.Verify(mock => mock.Send(It.Is<CombinedWithProbabilityRequest>(arg =>
-                arg.OperandA == operandA &&
-                arg.OperandB == operandB
+            _mediator.Verify(mock => mock.Send(It.Is<object>(arg =>
+                ((CombinedWithProbabilityRequest)arg).OperandA == operandA &&
+                ((CombinedWithProbabilityRequest)arg).OperandB == operandB
             ), It.IsAny<CancellationToken>()));
         }
 
@@ -91,7 +91,7 @@ namespace ProbabilityCalculatorTests.Controllers
         {
             // Arrange
             _mediator
-                .Setup(mock => mock.Send(It.IsAny<CombinedWithProbabilityRequest>(), It.IsAny<CancellationToken>()))
+                .Setup(mock => mock.Send(It.IsAny<object>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(new ProbabilityCalculationResult());
 
             var operandA = 0.3;
@@ -102,9 +102,9 @@ namespace ProbabilityCalculatorTests.Controllers
             var result = await controller.ExecuteAsync(ProbabilityCalculationTypes.Either, operandA, operandB);
 
             // Assert
-            _mediator.Verify(mock => mock.Send(It.Is<EitherProbabilityRequest>(arg =>
-                arg.OperandA == operandA &&
-                arg.OperandB == operandB
+            _mediator.Verify(mock => mock.Send(It.Is<object>(arg =>
+                ((EitherProbabilityRequest)arg).OperandA == operandA &&
+                ((EitherProbabilityRequest)arg).OperandB == operandB
             ), It.IsAny<CancellationToken>()));
         }
 
@@ -117,7 +117,7 @@ namespace ProbabilityCalculatorTests.Controllers
                 Probability = 0.5
             };
             _mediator
-                .Setup(mock => mock.Send(It.IsAny<CombinedWithProbabilityRequest>(), It.IsAny<CancellationToken>()))
+                .Setup(mock => mock.Send(It.IsAny<object>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(calculationResult);
 
             var operandA = 0.3;
