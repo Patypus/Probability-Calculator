@@ -1,10 +1,10 @@
 import React from 'react';
 
 export function OperandInput({label, value, setValue}) {
-    const updateField = (e, i, uop) => {
-        setValue(e.target.value);
+    const updateField = (event) => {
+        setValue(event.target.value);
     }
-    
+
     return (
         <div className="mb-1">
             <label className="form-label">{label}</label>
