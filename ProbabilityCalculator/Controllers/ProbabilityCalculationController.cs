@@ -1,10 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using ProbabilityCalculator.Attributes;
-using ProbabilityCalculator.Commands;
 using ProbabilityCalculator.Enums;
-using ProbabilityCalculator.Models;
-using ProbabilityCalculator.Probabilities;
 using System.Reflection;
 
 namespace ProbabilityCalculator.Controllers
@@ -38,7 +35,7 @@ namespace ProbabilityCalculator.Controllers
             var calcType = Assembly.GetExecutingAssembly().GetTypes()
                 .Where(type => type.GetCustomAttribute<CalculationTypeAttribute>()?.ProbabilityCalculationType == calculationType);
 
-            var calculation = Activator.CreateInstance(calcType.First());
+            var calculation = Activator.CreateInstance(calcType.First(), operandA, operandB);
 
             var result = await _mediator.Send(calculation);
 
