@@ -30,7 +30,10 @@
     "workbox-streams": "^6.5.4"
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^14.0.0",
     "ajv": "^8.12.0",
+    "babel-jest": "^27.5.1",
     "cross-env": "^7.0.3",
     "eslint": "^8.34.0",
     "eslint-config-react-app": "^7.0.1",
@@ -72,5 +75,11 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "jest": {
+    "clearMocks": true,
+    "transform": {
+      "^.+\\.(js|jsx)$": "babel-jest"
+    }
   }
 }
