@@ -1,10 +1,15 @@
 import React from 'react';
+import { Loading } from './Loading'
 
-export function Result ({ value }) {
+export function Result ({ value, loading }) {
     return (
         <div className="mb-3">
-            <label>Result:</label>
-            <span>{value}</span>
+            <h3>Result:</h3>
+            <div>
+            {loading 
+                ? <Loading />
+                : <span>{value}</span>}
+            </div>
         </div>
     )
 }
