@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Loading } from './Loading'
+import { GetCalculationTypes } from '../services/ProbabilityCalculationService';
 
 export function CalculationTypeSelector({selectedType, setSelectedType}) {
     const [types, setTypes] = useState([]);
     const [loadingTypes, setLoadingTypes] = useState(true);
 
     const loadTypes = async () => {
-        var response = await fetch('probabilitycalculation/types');
-        const data = await response.json();
+        const data = await GetCalculationTypes();
         setSelectedType(data[0])
         setTypes(data);
         setLoadingTypes(false);

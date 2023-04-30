@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { OperandInput } from './OperandInput'
 import { Result } from './Result';
 import { CalculationTypeSelector } from './CalculationTypeSelector'
+import { Calculate } from '../services/ProbabilityCalculationService';
 
 export function Calculation() {
     const [result, setResult] = useState('-');
@@ -13,8 +14,7 @@ export function Calculation() {
     const loadCalculation = async (event) => {
         event.preventDefault();
         setLoadingResult(true);
-        var response = await fetch(`probabilitycalculation/execute?type=${selectedType}&operandA=${operandA}&operandB=${operandB}`);
-        const data = await response.json();
+        const data = await Calculate(selectedType, operandA, operandB);
         onCalculationComplete(data);
         setLoadingResult(false);
     }
