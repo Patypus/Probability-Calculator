@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { Loading } from './Loading'
 import { GetCalculationTypes } from '../services/ProbabilityCalculationService';
 
@@ -32,4 +33,9 @@ export function CalculationTypeSelector({selectedType, setSelectedType}) {
                 </select>}
         </div>
     )
+}
+
+CalculationTypeSelector.propTypes = {
+    selectedType: PropTypes.string,
+    setSelectedType: PropTypes.func.isRequired
 }

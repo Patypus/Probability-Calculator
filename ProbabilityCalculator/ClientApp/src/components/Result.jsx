@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { Loading } from './Loading'
 import { displayModeDecimal, displayModePercentage } from '../lib/constants';
 
@@ -11,7 +12,7 @@ export function Result({ value, loading, staleResult }) {
     }
 
     useEffect(() => {
-        if (value === '') {
+        if (value === null) {
             setFormattedResult('-');
         }
         else if (displayMode === displayModeDecimal) {
@@ -41,4 +42,10 @@ export function Result({ value, loading, staleResult }) {
             </div>
         </div>
     )
+}
+
+Result.propTypes = {
+    value: PropTypes.number,
+    loading: PropTypes.bool.isRequired,
+    staleResult: PropTypes.bool.isRequired
 }

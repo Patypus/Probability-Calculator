@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 export function OperandInput({ label, value, setValue, valueValid }) {
 
@@ -17,3 +18,10 @@ export function OperandInput({ label, value, setValue, valueValid }) {
         </div>
     )
 };
+
+OperandInput.propTypes = {
+    label: PropTypes.string.isRequired,
+    value: PropTypes.string.isRequired,
+    setValue: PropTypes.func.isRequired,
+    valueValid: PropTypes.bool.isRequired
+}
