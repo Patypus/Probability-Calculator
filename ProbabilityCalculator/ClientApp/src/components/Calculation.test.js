@@ -66,6 +66,21 @@ describe('Calculation', () => {
         expect(Calculate).toHaveBeenCalledWith(dropdownValue, operandAValue, operandBValue);
     });
 
+    it('does not submit calculation when values are invalid', async () => {
+        Calculate.mockReturnValue({ probability: 0.3 })
+        await renderComponent();
+
+        const operandA = screen.getByLabelText('Operand A');
+        const calculateButton = screen.queryByText('Calculate');
+
+        const operandAValue = '55';
+
+        fireEvent.change(operandA, {target: {value: operandAValue}});
+        fireEvent.click(calculateButton);
+        
+        expect(Calculate).not.toHaveBeenCalled();
+    });
+
     it('returns result from calculate function', async () => {
         const calculatedProbability = 0.7
         Calculate.mockReturnValue({ probability: calculatedProbability })

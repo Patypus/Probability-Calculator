@@ -1,6 +1,6 @@
 import React from 'react';
 
-export function OperandInput({label, value, setValue}) {
+export function OperandInput({ label, value, setValue, valueValid }) {
 
     const idValue = label.replace(' ', '-')
     const updateField = (event) => {
@@ -9,8 +9,11 @@ export function OperandInput({label, value, setValue}) {
 
     return (
         <div className="mb-1">
-            <label htmlFor={`${label}-input`} className="form-label">{label}</label>
-            <input id={`${label}-input`} className="form-control" type="number" value={value} onChange={updateField}/>
+            <label htmlFor={`${idValue}-input`} className="form-label">{label}</label>
+            <input id={`${idValue}-input`} className={`form-control ${valueValid ? '' : 'is-invalid'}`} type="number" value={value} onChange={updateField} />
+            {!valueValid && <div className="invalid-feedback">
+                Please enter a value between 0 and 1.
+            </div>}
         </div>
     )
 };
