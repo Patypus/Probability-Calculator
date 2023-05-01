@@ -6,7 +6,7 @@ import { Calculate } from '../services/ProbabilityCalculationService';
 import { operandValid } from '../lib/utils';
 
 export function Calculation() {
-    const [result, setResult] = useState('-');
+    const [result, setResult] = useState('');
     const [loadingResult, setLoadingResult] = useState(false);
     const [selectedType, setSelectedType] = useState(null);
     const [operandA, setOperandA] = useState(0);

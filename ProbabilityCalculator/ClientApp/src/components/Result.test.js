@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import { Result } from './Result';
 
 describe('Result', () => {
@@ -32,5 +32,20 @@ describe('Result', () => {
 
         const renderedValue = screen.queryByText(value);
         expect(renderedValue).toHaveClass('text-black-50');
+    });
+
+    it('changing display mode updates displayed value', () => {
+        const value = '0.5';
+
+        render(<Result value={value} loading={false} staleResult={true} />)
+
+        const percentageMode = screen.queryByText('Percentage');
+        fireEvent.click(percentageMode);
+        const percentageValue = screen.queryByText('50%');
+        expect(percentageValue).toBeInTheDocument()
+        const decimalMode = screen.queryByText('Decimal');
+        fireEvent.click(decimalMode);
+        const decimalValue = screen.queryByText(value);
+        expect(decimalValue).toBeInTheDocument()
     });
 });
